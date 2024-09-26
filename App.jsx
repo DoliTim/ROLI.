@@ -7,9 +7,10 @@ import SignInPage from './components/SignInPage';
 import SubscriptionPage from './components/SubscriptionPage';
 import EngagementPage from './components/EngagementPage';
 import './App.css'; // Import your styles
-
+import Navbar from './components/Navbar';
 const App = () => (
   <Router>
+    <Navbar />
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/register" element={<RegisterPage />} />

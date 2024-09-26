@@ -3,7 +3,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { FaHandshake, FaMobileAlt, FaGift } from 'react-icons/fa';
+import {
+  FaHandshake,
+  FaMobileAlt,
+  FaGift,
+  FaUsers,
+  FaShareAlt,
+  FaChartLine,
+} from 'react-icons/fa'; // Added new icons
 import logoImage from '../assets/logo.png';
 
 const LandingContainer = styled.div`
@@ -176,16 +183,7 @@ const Footer = styled.footer`
 
 const LandingPage = () => (
   <LandingContainer>
-    <Header>
-      <LogoContainer>
-        <LogoImage src={logoImage} alt="Logo" />
-        <LogoText>Roli.</LogoText>
-      </LogoContainer>
-      <NavLinks>
-        <Link to="/register">Register</Link>
-        <Link to="/signin">Sign In</Link>
-      </NavLinks>
-    </Header>
+    
 
     <HeroSection>
       <HeroOverlay />
@@ -249,11 +247,56 @@ const LandingPage = () => (
       </p>
     </Section>
 
+    {/* New Team Collaboration and Referral Section */}
+    <Section>
+      <h3>Boost Your Earnings with Teamwork</h3>
+      <p>
+        Collaborate with others and take advantage of our referral program to maximize your rewards.
+        Share the benefits of our platform with friends and grow together.
+      </p>
+      <FeaturesContainer>
+        <Feature>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <FaUsers />
+            <h4>Team Collaboration</h4>
+            <p>Work together to share strategies and achieve common goals.</p>
+          </motion.div>
+        </Feature>
+        <Feature>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <FaShareAlt />
+            <h4>Direct Referrals</h4>
+            <p>Invite friends directly and earn rewards when they join.</p>
+          </motion.div>
+        </Feature>
+        <Feature>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <FaChartLine />
+            <h4>Increase Earnings</h4>
+            <p>Boost your income through collaboration and direct referrals.</p>
+          </motion.div>
+        </Feature>
+      </FeaturesContainer>
+    </Section>
+
     <Section>
       <h3>Subscription Packages</h3>
       <FeaturesContainer>
         <Feature>
-          <h4>Package 1</h4>
+          <h4>Associate
+          </h4>
           <p>€150 - Access to basic features and daily clicks.</p>
         </Feature>
         <Feature>
