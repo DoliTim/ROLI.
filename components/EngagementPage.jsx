@@ -1,10 +1,11 @@
 // src/components/EngagementPage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import tokenImage from '../assets/token.png';
+import tokenSound from '../assets/tokenSound.mp3'; // Ensure this file exists
 
-// Import your images
+// Import your Roli images
 import roli1Image from '../assets/roli1.png';
 import roli2Image from '../assets/roli2.png';
 import roli3Image from '../assets/roli3.png';
@@ -16,21 +17,26 @@ import roli8Image from '../assets/roli8.png';
 import roli9Image from '../assets/roli9.png';
 
 const Container = styled.div`
-  padding: 40px 20px;
+  padding: 60px 20px;
   font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  min-height: 100vh;
+  color: #fff;
 `;
 
 const Title = styled.h2`
   text-align: center;
   color: #ff6600;
   margin-bottom: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 102, 0, 0.7);
 `;
 
 const ClicksRemaining = styled.p`
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 40px;
+  color: #ffffffcc;
 `;
 
 const AppsContainer = styled.div`
@@ -41,18 +47,22 @@ const AppsContainer = styled.div`
 
 const AppCard = styled(motion.div)`
   position: relative;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #ff6600;
+  border-radius: 20px;
   width: 220px;
+  height: 220px;
   margin: 15px;
   padding: 20px;
   text-align: center;
   cursor: pointer;
   overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s, box-shadow 0.3s;
 
   &:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.6);
   }
 
   img {
@@ -60,17 +70,23 @@ const AppCard = styled(motion.div)`
     height: 100px;
     margin-bottom: 15px;
     object-fit: contain;
-    border-radius: 12px;
+    border-radius: 15px;
+    transition: transform 0.3s;
+  }
+
+  &:hover img {
+    transform: rotate(10deg) scale(1.1);
   }
 
   h4 {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 10px;
     font-weight: 600;
+    text-shadow: 0 0 5px rgba(255, 102, 0, 0.7);
   }
 `;
 
-/* Existing styled components for TokenWrapper, PlusSign, TokenImage */
+/* Styled components for Token Animation */
 const TokenWrapper = styled(motion.div)`
   position: absolute;
   top: 50%;
@@ -82,38 +98,37 @@ const TokenWrapper = styled(motion.div)`
 `;
 
 const PlusSign = styled.span`
-  font-size: 24px;
+  font-size: 28px;
   color: #ff6600;
-  margin-right: 5px;
-  font-weight: 700;
+  margin-right: 8px;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(255, 102, 0, 0.8);
 `;
 
 const TokenImage = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 `;
 
-/* Define animation variants */
-const animationVariants = [
-  {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-  },
-  {
-    initial: { opacity: 0, scale: 0.8 },
-    animate: { opacity: 1, scale: 1 },
-  },
-  {
-    initial: { opacity: 0, rotate: -10 },
-    animate: { opacity: 1, rotate: 0 },
-  },
-  // Add more variants if desired
-];
+/* Define animation variants for AppCard */
+const cardVariants = {
+  initial: { opacity: 0, y: 50 },
+  animate: { opacity: 1, y: 0 },
+  hover: { scale: 1.05 },
+};
+
+/* Define animation variants for TokenWrapper */
+const tokenVariants = {
+  initial: { opacity: 0, scale: 0.5, y: 0 },
+  animate: { opacity: 1, scale: 1.2, y: -100 },
+  exit: { opacity: 0, scale: 0.8, y: -150 },
+};
 
 const EngagementPage = () => {
   const [remainingClicks, setRemainingClicks] = useState(10);
   const [apps, setApps] = useState([]);
   const [clickedAppId, setClickedAppId] = useState(null);
+  const audioRef = useRef(null); // Reference to the audio element
 
   useEffect(() => {
     const roliImages = [
@@ -127,25 +142,29 @@ const EngagementPage = () => {
       roli8Image,
       roli9Image,
     ];
-    const variantsCount = animationVariants.length;
+
     const appsData = roliImages.map((image, index) => ({
       id: index + 1,
-      name: `App ${index + 1}`,
+      name: `Roli ${index + 1}`,
       image: image,
-      animation: animationVariants[Math.floor(Math.random() * variantsCount)],
     }));
+
     setApps(appsData);
   }, []);
 
   const handleAppClick = (app) => {
     if (remainingClicks > 0) {
-      setRemainingClicks(remainingClicks - 1);
+      setRemainingClicks((prev) => prev - 1);
       setClickedAppId(app.id);
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+      }
 
-      // Hide the token image after the animation duration
+      // Hide the token animation after it completes
       setTimeout(() => {
         setClickedAppId(null);
-      }, 2000);
+      }, 1500); // Duration matches the animation duration
     } else {
       alert('You have no clicks remaining today.');
     }
@@ -153,7 +172,7 @@ const EngagementPage = () => {
 
   return (
     <Container>
-      <Title>Explore Apps and Earn Rewards</Title>
+      <Title>Engage with Roli!</Title>
       <ClicksRemaining>
         You have <strong>{remainingClicks}</strong> clicks remaining today.
       </ClicksRemaining>
@@ -162,9 +181,11 @@ const EngagementPage = () => {
           <AppCard
             key={app.id}
             onClick={() => handleAppClick(app)}
-            initial={app.animation.initial}
-            animate={app.animation.animate}
-            transition={{ duration: 1, ease: 'easeOut' }}
+            variants={cardVariants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            transition={{ duration: 0.5, ease: 'easeOut' }}
           >
             <img src={app.image} alt={app.name} />
             <h4>{app.name}</h4>
@@ -172,10 +193,11 @@ const EngagementPage = () => {
             <AnimatePresence>
               {clickedAppId === app.id && (
                 <TokenWrapper
-                  initial={{ opacity: 0, y: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, y: -50, scale: 1 }}
-                  exit={{ opacity: 0, y: -100, scale: 1 }}
-                  transition={{ duration: 2, ease: 'easeOut' }}
+                  variants={tokenVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ duration: 1.5, ease: 'easeOut' }}
                 >
                   <PlusSign>+</PlusSign>
                   <TokenImage src={tokenImage} alt="Token" />
@@ -185,6 +207,8 @@ const EngagementPage = () => {
           </AppCard>
         ))}
       </AppsContainer>
+      {/* Audio Element for Token Sound */}
+      <audio ref={audioRef} src={tokenSound} />
     </Container>
   );
 };

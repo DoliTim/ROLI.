@@ -1,0 +1,9 @@
+[build]
+  base    = "."  # Change to "client" if your app is in the client folder
+  command = "npm run build"
+  publish = "build"  # Change to "client/build" if necessary
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
