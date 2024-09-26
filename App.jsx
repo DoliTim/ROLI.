@@ -8,6 +8,7 @@ import SubscriptionPage from './components/SubscriptionPage';
 import EngagementPage from './components/EngagementPage';
 import './App.css'; // Import your styles
 import Navbar from './components/Navbar';
+import PaymentPage from './components/PaymentPage';
 const App = () => (
   <Router>
     <Navbar />
@@ -16,6 +17,7 @@ const App = () => (
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/signin" element={<SignInPage />} />
       <Route path="/subscription" element={<SubscriptionPage />} />
+      <Route path="/payment" element={<PaymentPage />} />
       <Route path="/engagement" element={<EngagementPage />} />
     </Routes>
   </Router>

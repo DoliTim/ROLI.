@@ -1,10 +1,12 @@
 // src/components/SubscriptionPage.jsx
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 40px 20px;
   font-family: 'Poppins', sans-serif;
+  padding-top: 80px; /* Adjust based on Navbar height */
 `;
 
 const Title = styled.h2`
@@ -86,6 +88,7 @@ const SubscribeButton = styled.button`
 
 const SubscriptionPage = () => {
   const [selectedMembershipId, setSelectedMembershipId] = useState(null);
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const memberships = [
     {
@@ -136,8 +139,11 @@ const SubscriptionPage = () => {
 
   const handleSubscribe = () => {
     if (selectedMembershipId) {
-      // Implement the subscription logic here
-      alert(`You have selected the ${selectedMembershipId.replace('_', ' ').toUpperCase()} membership.`);
+      const selectedMembership = memberships.find(
+        (membership) => membership.id === selectedMembershipId
+      );
+      // Navigate to the PaymentPage and pass the selected membership data
+      navigate('/payment', { state: { membership: selectedMembership } });
     }
   };
 
