@@ -1,17 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import GlobalStyle from './GlobalStyle';
 import App from './App';
+import { AuthProvider } from './contexts/AuthContext'; // If using AuthProvider
 import reportWebVitals from './reportWebVitals';
+
+// Remove the index.css import if not needed
+// import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <>
+    <GlobalStyle /> {/* Apply global styles */}
+    <React.StrictMode>
+      <AuthProvider> {/* Wrap with AuthProvider if used */}
+        <App />
+      </AuthProvider>
+    </React.StrictMode>
+  </>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
