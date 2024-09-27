@@ -11,7 +11,6 @@ import Teams from './components/Teams';
 import README from './components/README'; // Import the README component
 import './App.css'; // Import your styles
 import Navbar from './components/Navbar';
-import Dashboard from './components/Dashboard';
 
 const App = () => (
   <Router>
@@ -25,7 +24,7 @@ const App = () => (
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/teams" element={<Teams />} />
       <Route path="/readme" element={<README />} /> {/* Add README Route */}
-      <Route path="/dashboard" element={<Dashboard />} />
+     
     </Routes>
   </Router>
 );
