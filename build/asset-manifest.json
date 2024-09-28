@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.5adf9920.css",
+    "main.js": "/static/js/main.c2a36abb.js",
+    "static/js/453.3a364ea0.chunk.js": "/static/js/453.3a364ea0.chunk.js",
+    "static/media/roliheader.png": "/static/media/roliheader.1faed315a8df646a4600.png",
+    "static/media/logo.png": "/static/media/logo.8619f3cccadbd0542f37.png",
+    "static/media/token.png": "/static/media/token.8619f3cccadbd0542f37.png",
+    "static/media/qr.jpg": "/static/media/qr.464c2e2be30fb90dbec4.jpg",
+    "static/media/roliSound.mp3": "/static/media/roliSound.910f9059250ba8c75e7c.mp3",
+    "static/media/depositSound.mp3": "/static/media/depositSound.5b4560178d31688eadfe.mp3",
+    "static/media/authSound.mp3": "/static/media/authSound.c9980605b3016b98eb64.mp3",
+    "static/media/warning.mp3": "/static/media/warning.930cdfa4b3a7a378832f.mp3",
+    "static/media/tokenSound.mp3": "/static/media/tokenSound.233f0fdf3cd51cc2fb54.mp3",
+    "static/media/denySound.mp3": "/static/media/denySound.75f6d5714f9bd7cbaa8f.mp3",
+    "static/media/clickSound.mp3": "/static/media/clickSound.eb2fa979ab2506759491.mp3",
+    "static/media/roli6.png": "/static/media/roli6.d7c701d05511c7e62b38.png",
+    "static/media/roli4.png": "/static/media/roli4.a8445905c6591b9e1fe5.png",
+    "static/media/roli5.png": "/static/media/roli5.98bf10864126dca6bb20.png",
+    "index.html": "/index.html",
+    "main.5adf9920.css.map": "/static/css/main.5adf9920.css.map",
+    "main.c2a36abb.js.map": "/static/js/main.c2a36abb.js.map",
+    "453.3a364ea0.chunk.js.map": "/static/js/453.3a364ea0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5adf9920.css",
+    "static/js/main.c2a36abb.js"
+  ]
+}

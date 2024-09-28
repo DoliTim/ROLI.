@@ -95,41 +95,46 @@ const SubscriptionPage = () => {
       id: 'associate',
       name: 'Associate',
       cost: 100,
-      validity: 75,
+      validity: 30, // Reduced validity to 30 days
       clicksPerDay: 4,
       rewardPerClick: 1,
+      referralBonus: '1 Roli token per referral (direct recruits only)',
     },
     {
       id: 'partner',
       name: 'Partner',
-      cost: 300,
+      cost: 500, // Increased cost
       validity: 75,
       clicksPerDay: 10,
-      rewardPerClick: 1.6,
+      rewardPerClick: 1.5,
+      referralBonus: '2 Roli tokens per referral + 10% from 1st & 2nd generation recruits',
     },
     {
       id: 'senior_partner',
       name: 'Senior Partner',
-      cost: 650,
+      cost: 1000, // Increased cost
       validity: 75,
       clicksPerDay: 20,
       rewardPerClick: 2,
+      referralBonus: '3 Roli tokens per referral + 15% from 1st & 2nd generation recruits',
     },
     {
       id: 'vip_member',
       name: 'VIP Member',
-      cost: 1000,
+      cost: 2000, // Increased cost
       validity: 75,
-      clicksPerDay: 30,
+      clicksPerDay: 40,
       rewardPerClick: 2.5,
+      referralBonus: '4 Roli tokens per referral + 20% from 3rd level recruits',
     },
     {
       id: 'elite_member',
       name: 'Elite Member',
-      cost: 2000,
+      cost: 5000, // Increased cost
       validity: 75,
-      clicksPerDay: 40,
+      clicksPerDay: 50,
       rewardPerClick: 3,
+      referralBonus: '5 Roli tokens per referral + 30% from 4th level recruits',
     },
   ];
 
@@ -163,6 +168,7 @@ const SubscriptionPage = () => {
               <li>Validity: {membership.validity} days</li>
               <li>Clicks per day: {membership.clicksPerDay}</li>
               <li>Reward per click: {membership.rewardPerClick} Roli tokens</li>
+              <li>Referral Bonus: {membership.referralBonus}</li>
             </ul>
           </MembershipCard>
         ))}
