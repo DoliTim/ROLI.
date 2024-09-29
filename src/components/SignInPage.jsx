@@ -4,22 +4,23 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaSignInAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // For sending requests to the backend
 import Clickable from './Clickable';
-import authSoundFile from '../assets/authSound.mp3'; // Ensure this file exists
-import denySoundFile from '../assets/denySound.mp3'; // Ensure this file exists
+import authSoundFile from '../assets/authSound.mp3';
+import denySoundFile from '../assets/denySound.mp3';
 
 // Styled Components
 
 const Container = styled.div`
   font-family: 'Poppins', sans-serif;
   padding: 60px 20px;
-  background: linear-gradient(135deg, #1f1c2c, #928dab); /* Futuristic dark background */
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
   min-height: 100vh;
   color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Center vertically */
+  justify-content: center;
 `;
 
 const Title = styled.h2`
@@ -29,7 +30,7 @@ const Title = styled.h2`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff; /* White color for heading */
+  color: #ffffff;
 
   svg {
     margin-right: 10px;
@@ -55,12 +56,14 @@ const Form = styled.form`
 const Label = styled.label`
   margin-bottom: 15px;
   font-size: 16px;
-  color: #ff6600; /* Orange color for labels */
+  color: #ff6600;
   font-weight: 500;
+  width: 100%;
 
   span {
     display: block;
     margin-bottom: 5px;
+    text-align: left;
   }
 
   input {
@@ -105,24 +108,29 @@ const ErrorMessage = styled.p`
 `;
 
 const SignInPage = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const authSound = new Audio(authSoundFile); // Initialize auth sound
-  const denySound = new Audio(denySoundFile); // Initialize deny sound
+  const authSound = new Audio(authSoundFile);
+  const denySound = new Audio(denySoundFile);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Simulated authentication logic
-    const { username, password } = formData;
-    if (username === 'admin' && password === 'password') {
-      authSound.play(); // Play auth sound on success
-      setError('');
-      navigate('/subscription');
-    } else {
-      denySound.play(); // Play deny sound on failure
-      setError('Invalid username or password.');
+    try {
+      const response = await axios.post('http://localhost:5000/signin', formData);
+      if (response.status === 200) {
+        authSound.play();
+        setError('');
+        // Navigate to the dashboard after successful login
+        navigate('/Teams'); 
+      }
+    } catch (error) {
+      denySound.play();
+      setError(error.response?.data?.message || 'Login failed.');
     }
   };
 

@@ -4,30 +4,48 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaSignInAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // For sending requests to the backend
+import Clickable from './Clickable';
+import authSoundFile from '../assets/authSound.mp3';
+import denySoundFile from '../assets/denySound.mp3';
+
+// Styled Components
 
 const Container = styled.div`
   font-family: 'Poppins', sans-serif;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
   min-height: 100vh;
+  color: #fff;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f7f7f7;
-`;
-
-const FormWrapper = styled(motion.div)`
-  background-color: #ffffff;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
 `;
 
 const Title = styled.h2`
-  text-align: center;
-  color: #ff6600;
-  margin-bottom: 30px;
-  font-weight: 600;
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(255, 102, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+
+  svg {
+    margin-right: 10px;
+  }
+`;
+
+const FormWrapper = styled(motion.div)`
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #ff6600;
+  border-radius: 12px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+  backdrop-filter: blur(10px);
 `;
 
 const Form = styled.form`
@@ -38,12 +56,14 @@ const Form = styled.form`
 const Label = styled.label`
   margin-bottom: 15px;
   font-size: 16px;
-  color: #333;
+  color: #ff6600;
   font-weight: 500;
+  width: 100%;
 
   span {
     display: block;
     margin-bottom: 5px;
+    text-align: left;
   }
 
   input {
@@ -52,6 +72,8 @@ const Label = styled.label`
     border-radius: 8px;
     font-size: 16px;
     width: 100%;
+    background-color: #1e1e1e;
+    color: #fff;
 
     &:focus {
       outline: none;
@@ -61,7 +83,7 @@ const Label = styled.label`
   }
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled(motion.button)`
   background-color: #ff6600;
   color: #fff;
   padding: 16px;
@@ -79,28 +101,50 @@ const SubmitButton = styled.button`
   }
 `;
 
+const ErrorMessage = styled.p`
+  color: #ff4d4d;
+  margin-top: 10px;
+  text-align: center;
+`;
+
 const SignInPage = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const authSound = new Audio(authSoundFile);
+  const denySound = new Audio(denySoundFile);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // TODO: Implement sign-in logic
-    console.log('Sign In:', formData);
-    navigate('/subscription');
+    try {
+      const response = await axios.post('http://localhost:5000/signin', formData);
+      if (response.status === 200) {
+        authSound.play();
+        setError('');
+        // Navigate to the dashboard after successful login
+        navigate('/dashboard'); 
+      }
+    } catch (error) {
+      denySound.play();
+      setError(error.response?.data?.message || 'Login failed.');
+    }
   };
 
   return (
     <Container>
+      <Title>
+        <FaSignInAlt />
+        Sign In to Your Account
+      </Title>
       <FormWrapper
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Title>
-          <FaSignInAlt style={{ marginRight: '10px' }} />
-          Sign In to Your Account
-        </Title>
         <Form onSubmit={handleSubmit}>
           <Label>
             <span>Username</span>
@@ -120,7 +164,10 @@ const SignInPage = () => {
               required
             />
           </Label>
-          <SubmitButton type="submit">Sign In</SubmitButton>
+          <Clickable>
+            <SubmitButton type="submit">Sign In</SubmitButton>
+          </Clickable>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
         </Form>
       </FormWrapper>
     </Container>

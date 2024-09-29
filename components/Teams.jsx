@@ -1,8 +1,9 @@
 // src/components/Teams.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
+import axios from 'axios'; // For API calls
 import tokenImage from '../assets/token.png';
 import tokenSound from '../assets/tokenSound.mp3'; // Ensure this file exists
 
@@ -106,7 +107,23 @@ const ReferralCard = styled(motion.div)`
 
 const Teams = () => {
   const [clickedGeneration, setClickedGeneration] = useState(null);
+  const [roliTokens, setRoliTokens] = useState(0); // Roli token state
   const audio = new Audio(tokenSound); // Initialize audio
+  const userId = '5d9de678a7588b3377cc5c153d054c0e'; // The user ID of DOLYMOLLY
+
+  // Fetch Roli tokens for the user
+  useEffect(() => {
+    const fetchRoliTokens = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/user/${userId}/roli-tokens`);
+        setRoliTokens(response.data.amount_of_roli_tokens);
+      } catch (error) {
+        console.error('Error fetching Roli tokens:', error);
+      }
+    };
+
+    fetchRoliTokens();
+  }, [userId]);
 
   const handleReferralClick = (generation) => {
     setClickedGeneration(generation);
@@ -125,8 +142,15 @@ const Teams = () => {
 
       <IncomeContainer>
         <IncomeBox>
-          <h3>Daily Income</h3>
-          <p>$150</p>
+          <h3>Your Roli Tokens</h3>
+          <p>
+            {roliTokens}{' '}
+            <img
+              src={tokenImage}
+              alt="Roli Token"
+              style={{ width: '24px', verticalAlign: 'middle' }}
+            />
+          </p>
         </IncomeBox>
         <IncomeBox>
           <h3>All-Time Income</h3>

@@ -370,51 +370,56 @@ const LandingPage = () => {
       </Section>
 
   {/* Team Collaboration and Referral Section */}
-  <Section>
-        <h3>Boost Your Earnings with Teamwork</h3>
-        <p>
-          Collaborate with others and take advantage of our referral program to maximize your rewards.
-          Share the benefits of our platform with friends and grow together.
-        </p>
-        <FeaturesContainer>
-          <Feature>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <FaUsers />
-              <h4>Team Collaboration</h4>
-              <p>Work together to share strategies and achieve common goals.</p>
-            </motion.div>
-          </Feature>
-          <Feature>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <FaShareAlt />
-              <h4>Direct Referrals</h4>
-              <p>Invite friends directly and earn rewards when they join.</p>
-            </motion.div>
-          </Feature>
-          <Feature>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <FaChartLine />
-              <h4>Increase Earnings</h4>
-              <p>Boost your income through collaboration and direct referrals.</p>
-            </motion.div>
-          </Feature>
-        </FeaturesContainer>
-      </Section>
+<Section>
+  <h3>Boost Your Earnings with Teamwork</h3>
+  <p>
+    Collaborate with others and take advantage of our referral program to maximize your rewards.
+    Share the benefits of our platform with friends and grow together.
+  </p>
+  <FeaturesContainer>
+    <Feature>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
+        <FaUsers />
+        <h4>Team Collaboration</h4>
+        <p>Work together to share strategies and achieve common goals.</p>
+      </motion.div>
+    </Feature>
+    <Feature>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
+        <FaShareAlt />
+        <h4>Direct Referrals</h4>
+        <p>Invite friends directly and earn rewards when they join.</p>
+      </motion.div>
+    </Feature>
+    <Feature>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        viewport={{ once: true }}
+      >
+        <FaChartLine />
+        <h4>Increase Earnings</h4>
+        <p>Boost your income through collaboration and direct referrals.</p>
+      </motion.div>
+    </Feature>
+  </FeaturesContainer>
+  
+  {/* Add the button for Roli Referral Program */}
+  <CTAButton to="/referral" onClick={playClickSound}>
+    Roli. Token Referral Program
+  </CTAButton>
+</Section>
 
   {/* Subscription Packages Section */}
   <Section>

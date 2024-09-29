@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import roliTokenImage from '../assets/token.png'; // Import Roli token image
 import clickSoundFile from '../assets/clickSound.mp3'; // Import click sound
 import authSoundFile from '../assets/authSound.mp3'; // Import auth sound
+import { FaUserTie, FaUserPlus, FaCrown, FaStar, FaGem } from 'react-icons/fa'; // Import icons
 
 // Styled component for Roli token image
 const TokenImage = styled.img`
@@ -121,6 +122,15 @@ const SubscribeButton = styled.button`
   }
 `;
 
+// Membership icons for each subscription level
+const membershipIcons = {
+  associate: <FaUserTie size={32} color="#ff6600" />, // Icon for associate
+  partner: <FaUserPlus size={32} color="#ff6600" />, // Icon for partner
+  senior_partner: <FaCrown size={32} color="#ff6600" />, // Icon for senior partner
+  vip_member: <FaStar size={32} color="#ff6600" />, // Icon for VIP member
+  elite_member: <FaGem size={32} color="#ff6600" />, // Icon for elite member
+};
+
 const SubscriptionPage = () => {
   const [selectedMembershipId, setSelectedMembershipId] = useState(null);
   const navigate = useNavigate(); // Initialize the navigate function
@@ -134,41 +144,46 @@ const SubscriptionPage = () => {
       id: 'associate',
       name: 'Associate',
       cost: 100,
-      validity: 75,
+      validity: 30,
       clicksPerDay: 4,
       rewardPerClick: 1,
+      description: 'Basic membership with access to limited features and rewards.',
     },
     {
       id: 'partner',
       name: 'Partner',
-      cost: 300,
+      cost: 500,
       validity: 75,
       clicksPerDay: 10,
-      rewardPerClick: 1.6,
+      rewardPerClick: 1.5,
+      description: 'Partner level with enhanced rewards and more clicks per day.',
     },
     {
       id: 'senior_partner',
       name: 'Senior Partner',
-      cost: 650,
+      cost: 1000,
       validity: 75,
       clicksPerDay: 20,
       rewardPerClick: 2,
+      description: 'Senior Partner level with better daily rewards and clicks.',
     },
     {
       id: 'vip_member',
       name: 'VIP Member',
-      cost: 1000,
+      cost: 2000,
       validity: 75,
-      clicksPerDay: 30,
+      clicksPerDay: 40,
       rewardPerClick: 2.5,
+      description: 'Exclusive VIP membership with top-tier rewards and features.',
     },
     {
       id: 'elite_member',
       name: 'Elite Member',
-      cost: 2000,
+      cost: 5000,
       validity: 75,
-      clicksPerDay: 40,
+      clicksPerDay: 50,
       rewardPerClick: 3,
+      description: 'Elite membership with the highest rewards and privileges.',
     },
   ];
 
@@ -183,8 +198,20 @@ const SubscriptionPage = () => {
       const selectedMembership = memberships.find(
         (membership) => membership.id === selectedMembershipId
       );
-      // Navigate to the PaymentPage and pass the selected membership data
-      navigate('/payment', { state: { membership: selectedMembership } });
+
+      // Only pass serializable data to navigate
+      const membershipData = {
+        id: selectedMembership.id,
+        name: selectedMembership.name,
+        cost: selectedMembership.cost,
+        validity: selectedMembership.validity,
+        clicksPerDay: selectedMembership.clicksPerDay,
+        rewardPerClick: selectedMembership.rewardPerClick,
+        description: selectedMembership.description, // Pass the description too
+      };
+
+      // Navigate to PaymentPage with serializable data
+      navigate('/payment', { state: { membership: membershipData } });
     }
   };
 
@@ -199,21 +226,24 @@ const SubscriptionPage = () => {
               onClick={() => handleMembershipSelect(membership.id)}
               selected={selectedMembershipId === membership.id}
             >
+              {/* Display the icon based on the membership level */}
+              {membershipIcons[membership.id]}
               <h4>{membership.name}</h4>
               <p>
-                Cost: {membership.cost} 
-                <TokenImage src={roliTokenImage} alt="Roli Token" /> 
+                Cost: {membership.cost}{' '}
+                <TokenImage src={roliTokenImage} alt="Roli Token" />
                 <RoliText>Roli</RoliText> tokens
               </p>
               <ul>
                 <li>Validity: {membership.validity} days</li>
                 <li>Clicks per day: {membership.clicksPerDay}</li>
                 <li>
-                  Reward per click: {membership.rewardPerClick} 
-                  <TokenImage src={roliTokenImage} alt="Roli Token" /> 
+                  Reward per click: {membership.rewardPerClick}{' '}
+                  <TokenImage src={roliTokenImage} alt="Roli Token" />
                   <RoliText>Roli</RoliText> tokens
                 </li>
               </ul>
+              <p>{membership.description}</p>
             </MembershipCard>
           ))}
         </MembershipsContainer>

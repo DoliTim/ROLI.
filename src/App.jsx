@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
@@ -9,6 +8,8 @@ import EngagementPage from './components/EngagementPage';
 import PaymentPage from './components/PaymentPage';
 import Teams from './components/Teams';
 import README from './components/README'; // Import the README component
+import Referral from './components/Referral'; // Import the Referral component
+import AdminPanel from './components/AdminPanel'; // Import the AdminPanel component
 import './App.css'; // Import your styles
 import Navbar from './components/Navbar';
 
@@ -24,7 +25,8 @@ const App = () => (
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/teams" element={<Teams />} />
       <Route path="/readme" element={<README />} /> {/* Add README Route */}
-     
+      <Route path="/referral" element={<Referral />} /> {/* Add Referral Route */}
+      <Route path="/admin" element={<AdminPanel />} /> {/* Add AdminPanel Route */}
     </Routes>
   </Router>
 );
